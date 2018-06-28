@@ -39,4 +39,15 @@ public class WebServiceDemos {
         logger.info("shenzhen:{}", entity.getBody());
     }
 
+    @Test
+    public void testFundPrice() {
+        String url = String.format("http://localhost:%1$s/fund/%2$s/lastedPrice", port, "519005");
+
+        logger.info("url path:{}", url);
+        @SuppressWarnings("rawtypes")
+        ResponseEntity<String> entity = this.testRestTemplate.getForEntity(url, String.class);
+        logger.info("519005:{}", entity.getBody());
+
+    }
+
 }
