@@ -2,6 +2,8 @@ package org.externaldata.app.controller;
 
 import org.externaldata.app.utils.JsonUtils;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.nio.charset.Charset;
 import java.util.Random;
 
 /**
@@ -39,6 +42,8 @@ public class SinaPriceController {
 
     private Random r = new Random();
 
+    private Logger logger = LoggerFactory.getLogger(SinaPriceController.class);
+
     @RequestMapping(path = "/sinaprice/{stockId}/lastedPrice", method = RequestMethod.GET, produces = { "text/plain" })
     public String lastedPrice(@PathVariable(value = "stockId") String stockId) {
         RestTemplate restTemplate = new RestTemplate();
@@ -65,7 +70,8 @@ public class SinaPriceController {
             return response.getStatusCode().toString();
         }
         try {
-            JSONObject json = new JSONObject(jsonTool.parseJsonStr(response.getBody()));
+            JSONObject json = new JSONObject(jsonTool.parseJsonStr(
+                    new String(response.getBody().getBytes(Charset.forName("ISO-8859-1")))));
 
             return json.getString("dwjz");
         } catch (Exception e) {

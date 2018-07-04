@@ -41,7 +41,7 @@ public class WebServiceDemos {
 
     @Test
     public void testFundPrice() {
-        String url = String.format("http://localhost:%1$s/fund/%2$s/lastedPrice", port, "519005");
+        String url = String.format("http://localhost:%1$s/fund/%2$s/lastedPrice", port, "001186");
 
         logger.info("url path:{}", url);
         @SuppressWarnings("rawtypes")
